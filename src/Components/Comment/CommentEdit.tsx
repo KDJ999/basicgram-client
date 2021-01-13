@@ -1,4 +1,5 @@
 import React from "react";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -21,8 +22,8 @@ export default class CommentEdit extends React.Component<
       editComment: this.props.commentToUpdate.comment,
     };
   }
-  handleUpdate = () => {
-    fetch("http://localhost:4000/comment/update/${Posts.id}", {
+  handleUpdate = (posts: any) => {
+    fetch(`${APIURL}/comment/update/${posts.id}`, {
       method: "PUT",
       body: JSON.stringify({
         comment: this.state.editComment,

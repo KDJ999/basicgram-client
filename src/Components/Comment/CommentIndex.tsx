@@ -2,6 +2,7 @@ import React from "react";
 import CommentCreate from "./CommentCreate";
 import CommentEdit from "./CommentEdit";
 import CommentTable from "./CommentTable";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -33,7 +34,7 @@ export default class CommentIndex extends React.Component<
   }
   fetchComments = () => {
     //get comments by specific post id
-    fetch("http://localhost:4000/comment/getallcomments", {
+    fetch(`${APIURL}/comment/getallcomments`, {
       method: "GET",
 
       headers: {

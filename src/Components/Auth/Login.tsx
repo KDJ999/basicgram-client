@@ -1,14 +1,15 @@
 import React, { ChangeEvent, FormEvent } from "react";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
-    updateToken: (newToken: string) => void
+  updateToken: (newToken: string) => void;
 };
-  
-  type UserState = {
-    email: string;
-    password: string;
-  };
-  
+
+type UserState = {
+  email: string;
+  password: string;
+};
+
 export default class Login extends React.Component<AcceptedProps, UserState> {
   constructor(props: AcceptedProps) {
     super(props);
@@ -17,10 +18,10 @@ export default class Login extends React.Component<AcceptedProps, UserState> {
       password: "",
     };
   }
-  
+
   handleSubmit = (event: FormEvent) => {
-      event.preventDefault();
-    let url = "http://localhost:4000/user/login";
+    event.preventDefault();
+    let url = `${APIURL}/user/login`;
 
     fetch(url, {
       method: "POST",
@@ -30,16 +31,16 @@ export default class Login extends React.Component<AcceptedProps, UserState> {
         password: this.state.password,
       }),
       headers: new Headers({
-        "Content-Type": "application/json"
-      })
+        "Content-Type": "application/json",
+      }),
     })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        this.props.updateToken(data.token);     
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.props.updateToken(data.token);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   render() {
     return (
@@ -49,14 +50,16 @@ export default class Login extends React.Component<AcceptedProps, UserState> {
           <input
             placeholder="email"
             value={this.state.email}
-            onChange={(e) => this.setState({ email: e.target.value })} />
+            onChange={(e) => this.setState({ email: e.target.value })}
+          />
           <input
             placeholder="password"
             value={this.state.password}
-            onChange={(e) => this.setState({ password: e.target.value })} />
-            <button>Submit</button>
+            onChange={(e) => this.setState({ password: e.target.value })}
+          />
+          <button>Submit</button>
         </form>
       </div>
-    )
+    );
   }
-};  
+}

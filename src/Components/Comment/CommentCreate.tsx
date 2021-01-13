@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { render } from "@testing-library/react";
 import { integer } from "aws-sdk/clients/frauddetector";
 import TextField from "@material-ui/core/TextField";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -29,7 +30,7 @@ export default class CommentCreate extends React.Component<
   handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     console.log("please", this.state.comment);
-    fetch("http://localhost:4000/comment/createcomment", {
+    fetch(`${APIURL}/comment/createcomment`, {
       method: "POST",
       body: JSON.stringify({
         comment: this.state.comment,

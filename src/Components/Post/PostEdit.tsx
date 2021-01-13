@@ -1,4 +1,5 @@
 import React from "react";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -23,8 +24,8 @@ export default class PostEdit extends React.Component<
       editDescription: this.props.postToUpdate.description,
     };
   }
-  handleUpdate = () => {
-    fetch(`http://localhost:4000/post/update/${4}`, {
+  handleUpdate = (posts: any) => {
+    fetch(`${APIURL}/post/update/${posts.id}`, {
       method: "PUT",
       body: JSON.stringify({
         description: this.state.editDescription,

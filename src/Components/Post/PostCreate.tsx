@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { integer } from "aws-sdk/clients/frauddetector";
 import React, { FormEvent } from "react";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -40,7 +41,7 @@ export default class PostCreate extends React.Component<
     postData.append("likes", this.state.likes.toString());
 
     console.log(postData);
-    fetch("http://localhost:4000/post/createpost", {
+    fetch(`${APIURL}/post/createpost`, {
       method: "POST",
       body: postData,
       headers: new Headers({

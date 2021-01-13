@@ -1,6 +1,7 @@
 import React, { DetailedHTMLProps, FormEvent } from "react";
 import Button from "@material-ui/core/Button";
 import { withStyles, createStyles } from "@material-ui/core";
+import APIURL from "../../helpers/environment";
 
 const styles = createStyles({
   root: {
@@ -44,7 +45,7 @@ class PostTable extends React.Component<AcceptedProps, DeleteState> {
 
   DeletePost = (post: any) => {
     ///delete/:id
-    fetch(`http://localhost:4000/post/delete/${post.id}`, {
+    fetch(`${APIURL}/post/delete/${post.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -57,7 +58,7 @@ class PostTable extends React.Component<AcceptedProps, DeleteState> {
   fetchComments(posts: any) {
     console.log("this Works", posts);
     //get comments by specific post id
-    fetch(`http://localhost:4000/comment/getallcomments/${posts.id}`, {
+    fetch(`${APIURL}/comment/getallcomments/${posts.id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

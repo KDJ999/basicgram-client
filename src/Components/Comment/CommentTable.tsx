@@ -1,5 +1,6 @@
 import React, { FormEvent } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -20,7 +21,7 @@ export default class CommentDelete extends React.Component<AcceptedProps> {
   }
   fetchComments = () => {
     //get comments by specific post id
-    fetch("http://localhost:4000/comment/getallcomments", {
+    fetch(`${APIURL}/comment/getallcomments`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -37,7 +38,7 @@ export default class CommentDelete extends React.Component<AcceptedProps> {
   };
 
   DeleteComment = (event: FormEvent) => {
-    fetch("http://localhost:4000/comment/delete/id", {
+    fetch(`${APIURL}/comment/delete/id`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

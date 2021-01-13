@@ -4,6 +4,8 @@ import PostCreate from "./PostCreate";
 import PostEdit from "./PostEdit";
 import PostTable from "./PostTable";
 import CreateIndex from "../Comment/CommentIndex";
+import APIURL from "../../helpers/environment";
+
 type AcceptedProps = {
   sessionToken: string;
 };
@@ -34,7 +36,7 @@ export default class PostIndex extends React.Component<
     };
   }
   fetchPosts = () => {
-    fetch("http://localhost:4000/post/getallposts", {
+    fetch(`${APIURL}/post/getallposts`, {
       method: "GET",
       // body: JSON.stringify({}),
       headers: new Headers({
@@ -55,7 +57,7 @@ export default class PostIndex extends React.Component<
   };
 
   DeletePost = (e: React.FormEvent<HTMLInputElement>) => {
-    fetch("http://localhost:4000/post/delete/id", {
+    fetch(`${APIURL}/delete/id`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
