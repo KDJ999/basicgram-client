@@ -43,9 +43,9 @@ class PostTable extends React.Component<AcceptedProps, DeleteState> {
     //console.log(this.props);
   }
 
-  DeletePost = (post: any) => {
+  DeletePost = (posts: any) => {
     ///delete/:id
-    fetch(`${APIURL}/post/delete/${post.id}`, {
+    fetch(`${APIURL}/post/delete/${posts.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

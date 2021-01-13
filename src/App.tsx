@@ -42,7 +42,11 @@ export default class App extends React.Component<{}, State> {
     return (
       <Router>
         <div>
+          <h1> BasicGram</h1>
           <ul>
+            {/* <li>
+              <Link to="/BasicGram">BasicGram</Link>
+            </li> */}
             <li>
               <Link to="/">Signup</Link>
             </li>
