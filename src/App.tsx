@@ -52,9 +52,6 @@ export default class App extends React.Component<{}, State> {
             <li>
               <Link to="/postindex">PostIndex</Link>
             </li>
-            <li>
-              <Link to="/commentindex">CommentIndex</Link>
-            </li>
           </ul>
         </div>
         <hr />
@@ -67,9 +64,6 @@ export default class App extends React.Component<{}, State> {
           </Route>
           <Route exact path="/postindex">
             <PostIndex sessionToken={this.state.sessionToken} />
-          </Route>
-          <Route exact path="/commentindex">
-            {/* <CommentIndex sessionToken={this.state.sessionToken} /> */}
           </Route>
         </Switch>
       </Router>

@@ -116,7 +116,7 @@ class PostTable extends React.Component<AcceptedProps, DeleteState> {
                 this.props.updateOn();
               }}
             >
-              Update
+              Edit
             </Button>
             <Button
               onClick={() => {
