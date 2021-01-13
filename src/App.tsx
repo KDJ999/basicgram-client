@@ -1,26 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Signup from "./Components/Auth/Signup";
+import Login from "./Components/Auth/Login";
+import PostIndex from "./Components/Post/PostIndex";
+import CommentIndex from "./Components/Comment/CommentIndex";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type State = {
+  sessionToken: string;
+};
+
+export default class App extends React.Component<{}, State> {
+  constructor(props: State) {
+    super(props);
+    this.state = {
+      sessionToken: "",
+    };
+  }
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      this.setState({
+        sessionToken: localStorage.getItem("token") as string,
+      });
+    }
+  }
+  updateToken = (newToken: string) => {
+    localStorage.setItem("token", newToken);
+    this.setState({
+      sessionToken: newToken,
+    });
+  };
+
+  clearToken() {
+    localStorage.clear();
+    this.setState({
+      sessionToken: "",
+    });
+    sessionStorage.clear();
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/">Signup</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/postindex">PostIndex</Link>
+            </li>
+            <li>
+              <Link to="/commentindex">CommentIndex</Link>
+            </li>
+          </ul>
+        </div>
+        <hr />
+        <Switch>
+          <Route exact path="/">
+            <Signup updateToken={this.updateToken} />
+          </Route>
+          <Route exact path="/login">
+            <Login updateToken={this.updateToken} />
+          </Route>
+          <Route exact path="/postindex">
+            <PostIndex sessionToken={this.state.sessionToken} />
+          </Route>
+          <Route exact path="/commentindex">
+            {/* <CommentIndex sessionToken={this.state.sessionToken} /> */}
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
-
-export default App;
