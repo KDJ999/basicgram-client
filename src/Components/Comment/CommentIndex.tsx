@@ -3,9 +3,13 @@ import CommentCreate from "./CommentCreate";
 import CommentEdit from "./CommentEdit";
 import CommentTable from "./CommentTable";
 import APIURL from "../../helpers/environment";
+import { Button } from "antd";
 
 type AcceptedProps = {
   sessionToken: string;
+  editpostToUpdatePosts: (post: any) => void;
+  posts: [];
+  PostId: any;
 };
 
 type IndexState = {
@@ -15,6 +19,8 @@ type IndexState = {
   commentToUpdate: any;
   updateActive: boolean;
   ShowTable: boolean;
+  id: any;
+  isModalVisible: boolean;
 };
 
 export default class CommentIndex extends React.Component<
@@ -30,13 +36,14 @@ export default class CommentIndex extends React.Component<
       commentToUpdate: {},
       updateActive: false,
       ShowTable: false,
+      isModalVisible: false,
+      id: 0,
     };
   }
   fetchComments = () => {
     //get comments by specific post id
-    fetch(`${APIURL}/comment/getallcomments`, {
+    fetch(`${APIURL}/comment/getallcomments/${this.state.id}`, {
       method: "GET",
-
       headers: {
         "Content-Type": "application/json",
         Authorization: this.props.sessionToken,
@@ -96,24 +103,48 @@ export default class CommentIndex extends React.Component<
     });
   };
 
+  getId = (posts: any) => {
+    console.log("RAN", posts);
+    //trying to set the state of this.state.id = posts.id
+    this.setState({ id: posts }, () => console.log(this.state.id));
+  };
+  showModal = () => {
+    this.setState({
+      isModalVisible: true,
+    });
+  };
   render() {
     return (
       <div>
-        <button onClick={() => this.createOn()}>
+        <button
+          onClick={() => {
+            this.createOn();
+          }}
+        >
           Create your Comments Here!
         </button>
+        {/* <Button
+          type="primary"
+          onClick={() => {
+            this.createOn();
+          }}
+        >
+          Create Comment
+        </Button> */}
         {this.state.commentToCreateActive ? (
           <CommentCreate
-            commentToCreate={this.state.commentToCreate}
+            // commentToCreate={this.state.commentToCreate}
             fetchComments={this.fetchComments.bind(this)}
             sessionToken={this.props.sessionToken}
             createOff={this.createOff.bind(this)}
             ShowTable={this.ShowTable}
+            id={this.props.PostId}
+            modal={this.state.isModalVisible}
           />
         ) : (
           <></>
         )}
-        {this.state.updateActive ? (
+        {/* {this.state.updateActive ? (
           <CommentEdit
             commentToUpdate={this.state.commentToUpdate}
             updateOff={this.updateOff.bind(this)}
@@ -122,7 +153,7 @@ export default class CommentIndex extends React.Component<
           />
         ) : (
           <></>
-        )}
+        )} */}
         <CommentTable
           Comments={this.state.Comments}
           editcommentToUpdateComments={this.editcommentToUpdateComments.bind(
@@ -131,6 +162,8 @@ export default class CommentIndex extends React.Component<
           updateOn={this.updateOn.bind(this)}
           fetchComments={this.fetchComments.bind(this)}
           sessionToken={this.props.sessionToken}
+          posts={this.props.posts}
+          id={this.state.id}
         />
       </div>
     );

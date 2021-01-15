@@ -3,11 +3,9 @@ import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
-  // Posts: any;
   fetchPosts: () => void;
   updateOff: () => void;
   postToUpdate: any;
-  // editUpdateMyPosts: (post: any) => void;
 };
 
 type PostEditState = {
@@ -24,8 +22,9 @@ export default class PostEdit extends React.Component<
       editDescription: this.props.postToUpdate.description,
     };
   }
-  handleUpdate = (posts: any) => {
-    fetch(`${APIURL}/post/update/${posts.id}`, {
+  handleUpdate = (event: any) => {
+    event.preventDefault();
+    fetch(`${APIURL}/post/update/${this.props.postToUpdate.id}`, {
       method: "PUT",
       body: JSON.stringify({
         description: this.state.editDescription,
@@ -34,12 +33,11 @@ export default class PostEdit extends React.Component<
         "Content-Type": "application/json",
         Authorization: this.props.sessionToken,
       }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Works");
-      })
-      .catch((err) => console.log(err));
+    }).then((res) => {
+      this.props.fetchPosts();
+      this.props.updateOff();
+    });
+    // .catch((err) => console.log(err));
   };
   handleeditDescriptionInput = (e: React.FormEvent<HTMLInputElement>): void => {
     this.setState({ editDescription: e.currentTarget.value });
@@ -55,7 +53,7 @@ export default class PostEdit extends React.Component<
             value={this.state.editDescription}
             onChange={(e) => this.setState({ editDescription: e.target.value })}
           />
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     );

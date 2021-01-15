@@ -17,7 +17,8 @@ type IndexState = {
   postToUpdate: any;
   updateActive: boolean;
   ShowTable: boolean;
-  // PostId: number | null;
+  Comments: any;
+  id: any;
 };
 export default class PostIndex extends React.Component<
   AcceptedProps,
@@ -32,7 +33,8 @@ export default class PostIndex extends React.Component<
       postToUpdate: {},
       updateActive: false,
       ShowTable: false,
-      // PostId: null,
+      Comments: [],
+      id: 0,
     };
   }
   fetchPosts = () => {
@@ -109,11 +111,7 @@ export default class PostIndex extends React.Component<
       ShowTable: true,
     });
   };
-  // getPostId = (id: number) => {
-  //   this.setState({
-  //     PostId: id,
-  //   });
-  // };
+
   render() {
     return (
       <div>
@@ -129,7 +127,7 @@ export default class PostIndex extends React.Component<
         ) : (
           <></>
         )}
-        {this.state.updateActive ? (
+        {/* {this.state.updateActive ? (
           <PostEdit
             postToUpdate={this.state.postToUpdate}
             updateOff={this.updateOff.bind(this)}
@@ -138,7 +136,7 @@ export default class PostIndex extends React.Component<
           />
         ) : (
           <></>
-        )}
+        )} */}
         {/* {this.state.ShowTable ? ( */}
         <PostTable
           Posts={this.state.Posts}
@@ -146,12 +144,20 @@ export default class PostIndex extends React.Component<
           updateOn={this.updateOn.bind(this)}
           fetchPosts={this.fetchPosts.bind(this)}
           sessionToken={this.props.sessionToken}
-          // getPostId={this.getPostId}
+          Comments={this.state.Comments}
+          // updateCommentOn={this.updateCommentOn.bind(this)}
+          // editcommentToUpdateComments={this.editcommentToUpdateComments.bind(
+          //   this
+          // )}
+          // fetchComments={this.fetchComments.bind(this)}
+          // fetchTheComments={this.fetchTheComments.bind(this)}
         />
-        <CreateIndex
+        {/* <CreateIndex
           sessionToken={this.props.sessionToken}
+          editpostToUpdatePosts={this.editpostToUpdatePosts.bind(this)}
+          posts={this.state.Posts}
           // PostId={this.state.PostId}
-        />
+        /> */}
       </div>
     );
   }

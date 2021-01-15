@@ -10,8 +10,6 @@ type UserDataState = {
   editlastname: string;
   editemail: string;
   editpassword: string;
-  // userData: UserDetails[];
-  // results: UserDetails;
 };
 
 export default class UserEdit extends React.Component<

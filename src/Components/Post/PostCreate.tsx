@@ -16,7 +16,6 @@ type PostState = {
   file: string;
   description: string;
   likes: number;
-  // PostId: number | null;
 };
 
 export default class PostCreate extends React.Component<
@@ -29,7 +28,6 @@ export default class PostCreate extends React.Component<
       file: "",
       description: "",
       likes: 0,
-      // PostId: null,
     };
   }
 
@@ -57,24 +55,9 @@ export default class PostCreate extends React.Component<
         });
         console.log(data);
         this.props.ShowTable();
-        // this.props.fetchPosts();
-        // this.props.createOff();
-        // this.setState({file: data.file, description: data.description, likes: data.likes})
       })
       .catch((err) => console.log("This is where the error is" + err));
   };
-  // console.log(this.state);
-  // event.preventDefault();
-  // let upload = document.getElementById("upload");
-  // if (upload) {
-  //   upload.innerHTML = "HTMLElement";
-  // }
-  // const postData = new FormData();
-  // //postman => formdata
-  // postData.append("image", this.state
-  //   upload.files[0]
-  // postData.append("description", this.state.description);
-  // postData.append("likes", this.state.likes.toString());
 
   singleFileChangedHandler = (e: any) => {
     this.setState({
@@ -85,18 +68,11 @@ export default class PostCreate extends React.Component<
   handleDescriptionInput = (e: React.FormEvent<HTMLInputElement>): void => {
     this.setState({ description: e.currentTarget.value });
   };
-  // handleFileInput = (e: React.FormEvent<HTMLInputElement>): void => {
-  //   this.setState({ file: e.currentTarget.value });
-  // };
+
   handleLikesInput = (e: React.FormEvent<HTMLInputElement>): void => {
     this.setState({ likes: e.currentTarget.valueAsNumber });
   };
 
-  // getPostId = (id: number) => {
-  //   this.setState({
-  //     PostId: id,
-  //   });
-  // };
   render() {
     return (
       <div>
@@ -119,6 +95,7 @@ export default class PostCreate extends React.Component<
           <input
             placeholder="likes"
             value={this.state.likes}
+            name="Likes"
             type="number"
             onChange={(e) => this.setState({ likes: e.target.valueAsNumber })}
           />

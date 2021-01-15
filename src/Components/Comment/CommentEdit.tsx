@@ -3,9 +3,10 @@ import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
-  fetchComments: () => void;
-  updateOff: () => void;
+  // fetchComments: () => void;
+  updateCommentOff: () => void;
   commentToUpdate: any;
+  fetchTheComments(comment: any): void;
 };
 
 type CommentEditState = {
@@ -22,8 +23,9 @@ export default class CommentEdit extends React.Component<
       editComment: this.props.commentToUpdate.comment,
     };
   }
-  handleUpdate = (posts: any) => {
-    fetch(`${APIURL}/comment/update/${posts.id}`, {
+
+  handleUpdate = (event: any) => {
+    fetch(`${APIURL}/comment/update/${this.props.commentToUpdate.id}`, {
       method: "PUT",
       body: JSON.stringify({
         comment: this.state.editComment,
@@ -35,18 +37,37 @@ export default class CommentEdit extends React.Component<
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Works");
-      })
-
-      .catch((err) => console.log(err));
+        console.log(data, "handleUpdate");
+        this.props.fetchTheComments(data);
+        this.props.updateCommentOff();
+      });
   };
   handleeditCommentInput = (e: React.FormEvent<HTMLInputElement>): void => {
     this.setState({ editComment: e.currentTarget.value });
   };
-
+  // // editcommentToUpdateComments = (comment: React.SyntheticEvent) => {
+  // //     this.setState({
+  // //       commentToUpdate: comment,
+  // //     });
+  //   };
   render() {
     return (
       <div>
+        {/* <Button
+          onClick={() => {
+            this.editcommentToUpdateComments(comment);
+            this.updateCommentOn();
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          onClick={() => {
+            this.DeleteComment(comment);
+          }}
+        >
+          Delete
+        </Button> */}
         <h1>Edit Comment </h1>
         <form onSubmit={this.handleUpdate}>
           <input
@@ -54,7 +75,7 @@ export default class CommentEdit extends React.Component<
             value={this.state.editComment}
             onChange={(e) => this.setState({ editComment: e.target.value })}
           />
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </form>
       </div>
     );
